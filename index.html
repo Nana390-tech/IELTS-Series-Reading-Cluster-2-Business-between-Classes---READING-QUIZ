@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading Exam · Vocab List 6</title>
+<style>
+:root{
+  --mocha:#5B3A29; --mocha-d:#3E2619; --sky:#8EC5E8; --sky-l:#EAF4FB;
+  --ink:#241A14; --muted:#6B5D54; --line:#E2DAD4; --bg:#F7F6F4;
+  --good:#1E7A4F; --bad:#B3261E; --mark:#FFE58A;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.5;display:flex;flex-direction:column}
+button,select,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+header{background:var(--mocha);color:#fff;padding:12px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+header h1{margin:0;font-family:var(--serif);font-size:23px}
+header .sp{flex:1}
+.clock{background:#fff;color:var(--mocha-d);border-radius:10px;padding:5px 14px;font-weight:800;font-variant-numeric:tabular-nums;font-size:20px}
+.clock.low{background:#FBE9E7;color:var(--bad)}
+.who{font-size:16px;opacity:.9}
+/* screens */
+.screen{max-width:760px;margin:40px auto;padding:0 18px;width:100%}
+.panel{background:#fff;border:2px solid var(--line);border-radius:16px;padding:26px}
+.panel h2{font-family:var(--serif);font-size:30px;margin:0 0 8px;color:var(--mocha-d)}
+.panel p{margin:0 0 12px}
+.rules{background:var(--sky-l);border-radius:12px;padding:14px 18px;margin:16px 0}
+.rules li{margin:4px 0}
+label{display:block;font-weight:600;font-size:16px;margin:12px 0 4px}
+input[type=text],input[type=password]{width:100%;border:2px solid var(--line);border-radius:10px;padding:10px 12px;font-size:18px;background:#fff}
+.btn{background:var(--mocha);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:18px}
+.btn.ghost{background:#fff;color:var(--mocha);border:2px solid var(--mocha)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.err{color:var(--bad);font-weight:600;min-height:1.5em;margin-top:8px}
+/* exam */
+.split{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0}
+@media(max-width:860px){.split{grid-template-columns:1fr}.pane{max-height:none!important}}
+.pane{overflow:auto;padding:22px 24px 40px;max-height:calc(100vh - 60px)}
+.text{background:#fff;border-right:2px solid var(--line)}
+.text h2{font-family:var(--serif);font-size:27px;margin:0 0 14px;color:var(--mocha-d)}
+.para{display:grid;grid-template-columns:32px 1fr;gap:6px;margin-bottom:16px;font-family:var(--serif);font-size:19px;line-height:1.65;max-width:68ch}
+.para b{font-family:var(--sans);color:var(--mocha);font-size:20px}
+mark{background:var(--mark);border-radius:3px;padding:1px 2px}
+.sec{margin-bottom:28px}
+.sec h3{font-family:var(--serif);font-size:23px;margin:0 0 6px;color:var(--mocha-d)}
+.inst{color:var(--muted);font-size:16px;margin:0 0 12px}
+.hlist{background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 16px;margin-bottom:12px;font-size:17px}
+.hlist div{padding:2px 0}
+.hlist span{display:inline-block;width:44px;font-weight:700;color:var(--mocha)}
+.q{background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px}
+.q.answered{border-color:var(--sky)}
+.q .n{display:inline-block;min-width:34px;font-weight:800;color:var(--mocha)}
+.q .top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+select{border:2px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;font-size:18px;min-width:110px}
+.tf{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.tf button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:7px 14px;font-weight:700;font-size:16px}
+.tf button.sel{border-color:var(--mocha);background:var(--mocha);color:#fff}
+.box{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.box span{border:2px dashed var(--mocha);border-radius:8px;padding:4px 12px;font-weight:600;color:var(--mocha);background:#fff}
+.summary{background:#fff;border:2px solid var(--line);border-radius:12px;padding:16px;font-family:var(--serif);font-size:19px;line-height:2.2}
+.summary select{font-family:var(--sans);font-size:17px;padding:3px 8px;min-width:140px}
+.summary .n{font-family:var(--sans);font-weight:800;color:var(--mocha);font-size:15px}
+.submitbar{position:sticky;bottom:0;background:var(--bg);padding:12px 0;border-top:2px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.progress{font-weight:700;color:var(--muted)}
+/* modal */
+.veil{position:fixed;inset:0;background:rgba(36,26,20,.55);display:none;align-items:center;justify-content:center;z-index:20;padding:18px}
+.veil.show{display:flex}
+.dialog{background:#fff;border-radius:16px;padding:24px;max-width:460px;width:100%}
+.dialog h3{font-family:var(--serif);margin:0 0 8px;font-size:24px}
+/* results */
+.big{font-family:var(--serif);font-size:64px;line-height:1;margin:6px 0;color:var(--mocha-d)}
+table.rev{border-collapse:collapse;width:100%;font-size:16px;margin-top:10px}
+table.rev th,table.rev td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+table.rev th{color:var(--muted);font-size:14px;font-weight:700}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+table.br td{padding:4px 18px 4px 0}
+.cert{margin:20px 0;border:6px double var(--mocha);border-radius:10px;padding:24px;background:repeating-linear-gradient(45deg,#fff 0 12px,#F1F7FC 12px 24px);position:relative}
+.cert h4{font-family:var(--serif);font-size:28px;margin:0 0 6px;color:var(--mocha-d)}
+.cert .nm{font-family:var(--serif);font-size:32px;border-bottom:2px solid var(--mocha);display:inline-block;padding:0 10px;margin:6px 0}
+.cert .seal{position:absolute;right:20px;top:20px;width:84px;height:84px;border-radius:50%;background:var(--sky);border:3px solid var(--mocha);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;color:var(--mocha-d);font-size:15px;line-height:1.1}
+footer{color:var(--muted);font-size:14px;text-align:center;padding:16px}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:30}
+@media print{header,.row,.noprint,footer{display:none!important}body{background:#fff;display:block}.panel{border:0}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Reading Exam</h1><span>Vocab List 6 · A Business Between Classes</span>
+  <span class="sp"></span><span class="who" id="who"></span>
+  <span class="clock" id="clock" hidden>30:00</span>
+</header>
+<div id="app" style="flex:1;display:flex;flex-direction:column;min-height:0"></div>
+<div class="veil" id="veil" role="dialog" aria-modal="true"><div class="dialog" id="dialog"></div></div>
+<canvas id="cf"></canvas>
+<script>
+/* ---------------- Teacher settings ----------------
+   EXAM_MINUTES: length of the exam. When time runs out, the exam is submitted automatically.
+   The results passcode is set by the teacher (see the note that came with this file).        */
+const EXAM_MINUTES=30;
+const PASS_HASH="3m2q3k";
+/* --------------------------------------------------- */
+const D={"title": "A Business Between Classes", "paras": [["A", "At eleven o'clock at night, when most of her classmates are asleep, Mariam Al Mazrouei is still awake. The 20-year-old education student is sitting on her bedroom floor, mixing oud, rose and amber oils into small glass bottles. Two years ago, she made a couple of bottles as gifts for her friends' birthdays. Today, she has more than 300 customers across the UAE. \"Honestly, I never planned to be a businesswoman,\" she says. \"I just wanted my friends to smell nice.\""], ["B", "The business runs almost completely through an Instagram account. Customers send a request by direct message, and Mariam replies with the price and a delivery date. Before she starts any order, the customer must pay a deposit of half the price. When the money arrives, she sends a message to confirm the order. Every bottle carries a gold label with the name of her brand, and every box includes a small card with her signature. Mariam's mother is in charge of packing, while her younger sister has the role of social media assistant."], ["C", "Finding good materials took longer than Mariam expected. Her oud comes from an old family trader in the Abu Dhabi souq, who has been in the perfume trade for forty years. Her rose oil, however, comes from France. Because she cannot travel to buy it herself, she uses a small agency in Dubai that buys oils from French farms for small businesses in the Gulf. She must transfer the money to the agency's account in euros, so when the exchange rate changes, her costs change too. \"In one month, my rose oil became fifteen percent more expensive,\" she says."], ["D", "The most painful lessons were about money. In her first year, Mariam allowed friends to buy on credit and pay later. By the end of the semester, several of them owed her more than 2,000 dirhams in total, and some became rude when she asked for the money. To buy more oils, she had to take a loan of 3,000 dirhams from her father. \"I paid back every dirham,\" she says, \"but I made a new rule: no deposit, no perfume. Friends are friends, but business is business.\""], ["E", "Running a business while studying was not always easy. In her second year, Mariam's grades fell, and she nearly failed one of her teaching practice courses. Her family held a meeting and voted to close the business during exam weeks. Mariam was unhappy at first, but she now agrees it was the right decision. \"My studies are my duty to my family and to myself,\" she explains. \"The business can wait two weeks. My future pupils cannot.\""], ["F", "Dr Hessa Al Suwaidi, who teaches business at a university in Dubai, has studied young Emirati women who run small businesses. Last year, she presented her research at a conference in Abu Dhabi. She believes these students learn skills that are hard to teach in a classroom: how to answer customers politely, how to plan their money and how to solve problems quickly. \"Even students who never want a business career benefit,\" she says. \"Employers want graduates who can take responsibility, and a small business teaches exactly that.\""], ["G", "However, experts who support student businesses say they need careful planning. Students should open a separate bank account for the business, so that their own money and the business's money do not mix. They should also find out whether they need a licence, because selling from home without one can cause problems. Others warn that a business should never become more important than a degree. Mariam, who will graduate next year, has made a promise to herself. She will become a teacher first, and her perfume business will stay small, at least for now."]], "headings": {"options": [["i", "When business and study clashed"], ["ii", "Learning the hard way about trust and money"], ["iii", "An unexpected businesswoman"], ["iv", "Finding materials near and far"], ["v", "Why an expert sees value in student businesses"], ["vi", "How an order works"], ["vii", "Advice before you begin"], ["viii", "The history of perfume in the Gulf"], ["ix", "How her teachers reacted"], ["x", "Why most small businesses fail"]]}, "tfng": [{"s": "Mariam first made perfume to give as presents."}, {"s": "Mariam's sister is in charge of packing the orders."}, {"s": "All of the oils Mariam uses come from abroad."}, {"s": "At the end of her first semester, some friends still had not paid Mariam."}, {"s": "Mariam's father asked her to pay back more than she borrowed."}, {"s": "Mariam's teachers told her to close the business during exam weeks."}, {"s": "Dr Hessa believes running a small business teaches skills that employers want."}, {"s": "Mariam plans to run her business full-time after she graduates."}], "summary": {"text": "Mariam sells her perfume through an Instagram [1]. Before she starts an order, each customer must pay a [2]. Every bottle has a gold [3] with the name of her brand. She buys her rose oil through an [4] in Dubai. In her first year, she let friends buy on [5], but some did not pay. Dr Hessa, who studies student businesses, presented her research at a [6] in Abu Dhabi.", "box": ["account", "deposit", "label", "agency", "credit", "conference", "branch", "loan", "market", "receipt", "trader", "wage"], "answers": [0, 0, 0, 0, 0, 0]}};
+const K=JSON.parse(decodeURIComponent(escape(atob("fV1dImVjbmVyZWZub2MiWyAsXSJ0aWRlcmMiWyAsXSJ5Y25lZ2EiWyAsXSJsZWJhbCJbICxdInRpc29wZWQiWyAsXSJ0bnVvY2NhIltbIDoicyIgLF19IkciIDoicCIgLCJsbGFtcyB5YXRzIGxsaXcgc3NlbmlzdWIgZW11ZnJlcCByZWggZG5hICx0c3JpZiByZWhjYWV0IGEgZW1vY2ViIGxsaXcgZWhTIiA6InZlIiAsIi5lbWl0LWxsdWYgZm8gZXRpc29wcG8gZWh0IDpsbGFtcyBzc2VuaXN1YiBlaHQgcGVlayBkbmEgdHNyaWYgcmVoY2FldCBhIGVtb2NlYiBsbGl3IGVoUyIgOiJ5aHcieyAsfSJGIiA6InAiICwidGFodCB5bHRjYXhlIHNlaGNhZXQgc3NlbmlzdWIgbGxhbXMgYSBkbmEgLHl0aWxpYmlzbm9wc2VyIGVrYXQgbmFjIG9odyBzZXRhdWRhcmcgdG5hdyBzcmV5b2xwbUUiIDoidmUiICwiLnRpIHNlaGNhZXQgc3NlbmlzdWIgbGxhbXMgYSBkbmEgeXRpbGliaXNub3BzZXIgdG5hdyBzcmV5b2xwbWUgc3lhcyBhc3NlSCByRCIgOiJ5aHcieyAsfSIiIDoicCIgLCIiIDoidmUiICwiLmRlbm9pdG5lbSBzaSBub3NyZXAgdG5lcmVmZmlkIGEgZXN1YWNlYiB0c3VqIEVTTEFGIGVzb29oYyB0J25vRCAud29uayB0b25uYWMgZXcgb3MgLGVjaXZkYSAnc3JlaGNhZXQgcmVoIHR1b2JhIGduaWh0b24gc3lhcyB0eGV0IGVoVCAuc3NlbmlzdWIgZWh0IGVzb2xjIG90IGRldG92IFlMSU1BRiByZUgiIDoieWh3InsgLH0iIiA6InAiICwiIiA6InZlIiAsIi5hcnR4ZSBnbmlodHluYSByb2YgZGVrc2EgZWggcmVodGVodyB5YXMgdG9uIHNlb2QgdHhldCBlaHQgdHViICxrY2FiIHRpIGRpYXAgZG5hIHJlaHRhZiByZWggbW9yZiBuYW9sIGEga29vdCBlaHMgd29uayBlVyIgOiJ5aHcieyAsfSJEIiA6InAiICwibGF0b3Qgbmkgc21haHJpZCAwMDAsMiBuYWh0IGVyb20gcmVoIGRld28gbWVodCBmbyBsYXJldmVzIiA6InZlIiAsIi50ZXkgZGlhcCB0b24gZGFoIHllaHQgLHJldHNlbWVzIGVodCBmbyBkbmUgZWh0IHRhIHllbm9tIHJlaCAnZGV3bycgeWVodCBmSSIgOiJ5aHcieyAsfSJDIiA6InAiICwicXVvcyBpYmFoRCB1YkEgZWh0IG5pIHJlZGFydCB5bGltYWYgZGxvIG5hIG1vcmYgc2Vtb2MgZHVvIHJlSCIgOiJ2ZSIgLCIuJ3JldmVuJyBkbmEgJ3lsbm8nICwnbGxhJyBla2lsIHNkcm93IGhjdGFXIC5kYW9yYmEgbW9yZiBlbW9jIHNsaW8gcmVoIGZvIExMQSB0b24gb3MgLGliYWhEIHViQSBtb3JmIHNlbW9jIGR1byBlaFQiIDoieWh3InsgLH0iQiIgOiJwIiAsImduaWtjYXAgZm8gZWdyYWhjIG5pIHNpIHJlaHRvbSBzJ21haXJhTSIgOiJ2ZSIgLCIuRVNMQUYgc2kgdGkgb3MgLHRuZXJlZmZpZCBnbmlodGVtb3Mgc3lhcyB0eGV0IGVoVCAuYWlkZW0gbGFpY29zIHNlb2QgcmV0c2lzIHJlSCAuZ25pa2NhcCBmbyBlZ3JhaGMgbmkgc2kgUkVIVE9NIHJlSCIgOiJ5aHcieyAsfSJBIiA6InAiICwic3lhZGh0cmliICdzZG5laXJmIHJlaCByb2Ygc3RmaWcgc2Egc2VsdHRvYiBmbyBlbHB1b2MgYSBlZGFtIGVocyIgOiJ2ZSIgLCIuc2Ryb3cgcmVodG8gbmkgZ25paHQgZW1hcyBlaHQgc3lhcyB0eGV0IGVoVCAuJ3N0bmVzZXJwJyA9ICdzdGZpRyciIDoieWh3IntbIDoid3QiICxdIkVTTEFGIiAsIkVVUlQiICwiTkVWSUcgVE9OIiAsIk5FVklHIFRPTiIgLCJFVVJUIiAsIkVTTEFGIiAsIkVTTEFGIiAsIkVVUlQiWyA6InQiICx9Ii5hZWRpIG5pYW0gZWh0IHRvbiAsc2VjbmV0bmVzIG93dCB0c2FsIGVodCB5bG5vIHNpIGVzaW1vcnAgcydtYWlyYU0gOnBhclQgLnRyYXRzIG90IHRuYXcgb2h3IHN0bmVkdXRzIHJvZiBlY2l2ZGEgc2kgc2lodCA6J25yYXcnICwndHVvIGRuaWYgZGx1b2hzJyAsJ25lcG8gZGx1b2hzJyAsJ2duaW5uYWxwIGx1ZmVyYWMgZGVlTiciIDoiRyIgLCIudG5hdyBzcmV5b2xwbWUgc2xsaWtzIDplbGJhdWxhdiBlcmEgc2Vzc2VuaXN1YiB0bmVkdXRzIFlIVyBzbmlhbHB4ZSBlaHMgZG5hICx0cmVweGUgZWh0IHNpIGFzc2VIIHJEIiA6IkYiICwiLmRlaHNhbGMgeWR1dHMgZG5hIHNzZW5pc3ViIDpzbWF4ZSBnbmlydWQgc3NlbmlzdWIgZWh0IGVzb2xjIG90IGRldG92IHlsaW1hZiByZWggZG5hIGxsZWYgc2VkYXJnIHJlSCIgOiJFIiAsIi5lY25laXJlcHhlIGRhYiBhIGhndW9yaHQgeWVub20gZG5hIHRzdXJ0IHR1b2JhIGRlbnJhZWwgZWhTIC5uYW9sIGEgZGVkZWVuIG1haXJhTSBvcyAseWFwIHRvbiBkaWQgZG5hIHRpZGVyYyBubyB0aGd1b2Igc2RuZWlyRiIgOiJEIiAsIi5zbGFpcmV0YW0gZ25pdHRlZyB0dW9iYSBzaSBocGFyZ2FyYXAgZWxvaHcgZWhUIC4pcmFmKCBlY25hckYgbW9yZiBzZW1vYyBsaW8gZXNvciA7KXJhZW4oIHF1b3MgZWh0IG1vcmYgc2Vtb2MgZHVPIiA6IkMiICwiLmduaWtjYXAgLGxlYmFsICxub2l0YW1yaWZub2MgLHRpc29wZWQgLGVjaXJwICx0c2V1cWVyIDpwZXRzIHliIHBldHMgcmVkcm8gZW5vIHN3b2xsb2YgaHBhcmdhcmFwIGVoVCIgOiJCIiAsIi5kZXRjZXB4ZW51IHNhdyB0aSBvcyAsJ25hbW93c3NlbmlzdWIgYSBlYiBvdCBkZW5uYWxwIHJldmVuJyBtYWlyYU0gLnNyZW1vdHN1YyAwMDMgaHRpdyBzc2VuaXN1YiBhIGVtYWNlYiBzZG5laXJmIHJvZiB0ZmlnIEEiIDoiQSJ7IDoid2giICx9ImlpdiIgOiJHIiAsInYiIDoiRiIgLCJpIiA6IkUiICwiaWkiIDoiRCIgLCJ2aSIgOiJDIiAsIml2IiA6IkIiICwiaWlpIiA6IkEieyA6Imgiew=="))).split("").reverse().join(""));
+const hash=s=>{let h=5381;for(const c of String(s).trim().toUpperCase())h=((h<<5)+h+c.charCodeAt(0))>>>0;return h.toString(36)};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const STORE="reading-exam-list6-business";
+const store={get(){try{return JSON.parse(localStorage.getItem(STORE))}catch(_){return null}},set(v){try{localStorage.setItem(STORE,JSON.stringify(v))}catch(_){}},clear(){try{localStorage.removeItem(STORE)}catch(_){}}};
+const fresh=()=>({stage:"start",name:"",id:"",ans:{},endAt:0,submittedAt:0,unlocked:false,auto:false});
+let S=store.get()||fresh();
+const save=()=>store.set(S);
+const PKEYS="ABCDEFG".split("");
+const TOTAL=21;
+
+function dialog(html){$("#dialog").innerHTML=html;$("#veil").classList.add("show");const f=$("#dialog").querySelector("button,input");f&&f.focus()}
+function closeDialog(){$("#veil").classList.remove("show")}
+
+/* ---------- start ---------- */
+function start(){
+  $("#clock").hidden=true;$("#who").textContent="";
+  $("#app").innerHTML=`<div class="screen"><div class="panel">
+   <h2>Reading exam</h2>
+   <p>One passage, <b>21 questions</b>, <b>${EXAM_MINUTES} minutes</b>.</p>
+   <ul class="rules">
+    <li>Questions 1–7: matching headings.</li>
+    <li>Questions 8–15: True / False / Not Given.</li>
+    <li>Questions 16–21: summary completion.</li>
+    <li>You will <b>not</b> see any marks during the exam.</li>
+    <li>When time runs out, your answers are submitted automatically.</li>
+    <li>After you submit, your teacher will unlock your results with a passcode.</li>
+   </ul>
+   <label for="nm">Full name</label><input type="text" id="nm" autocomplete="name">
+   <label for="sid">Student ID</label><input type="text" id="sid" inputmode="numeric">
+   <div class="err" id="err"></div>
+   <div class="row"><button class="btn" id="go">Start the exam</button></div>
+  </div></div><footer>Designed by: Nazila Motahari &nbsp;|&nbsp; Higher Colleges of Technology</footer>`;
+  $("#go").onclick=()=>{
+    const n=$("#nm").value.trim(),i=$("#sid").value.trim();
+    if(!n||!i){$("#err").textContent="Type your full name and your student ID to start.";return}
+    S.name=n;S.id=i;S.stage="exam";S.endAt=Date.now()+EXAM_MINUTES*60000;save();exam();
+  };
+}
+
+/* ---------- exam ---------- */
+let tick=null;
+function answered(){return Object.values(S.ans).filter(Boolean).length}
+function exam(){
+  $("#who").textContent=`${S.name} · ${S.id}`;$("#clock").hidden=false;
+  const H=D.headings.options;
+  const sel=(n,opts,ph)=>`<select data-q="${n}" aria-label="Answer for question ${n}"><option value="">${ph}</option>${opts.map(o=>`<option ${S.ans[n]===o?"selected":""}>${o}</option>`).join("")}</select>`;
+  let sum=esc(D.summary.text);
+  D.summary.answers.forEach((_,i)=>{const n=16+i;sum=sum.replace(`[${i+1}]`,`<span class="n">${n}</span> ${sel(n,D.summary.box.slice().sort(),"choose")}`)});
+  $("#app").innerHTML=`<div class="split">
+   <article class="pane text" aria-label="Reading passage"><h2>${D.title}</h2>
+    ${D.paras.map(([k,t])=>`<div class="para"><b>${k}</b><div>${esc(t)}</div></div>`).join("")}</article>
+   <section class="pane" id="qs">
+    <div class="sec"><h3>Questions 1–7</h3><p class="inst">Choose the correct heading for each paragraph, A–G. There are three extra headings.</p>
+     <div class="hlist">${H.map(([n,t])=>`<div><span>${n}</span>${t}</div>`).join("")}</div>
+     ${PKEYS.map((p,i)=>`<div class="q" id="q${i+1}"><div class="top"><span class="n">${i+1}</span><span style="min-width:100px">Paragraph ${p}</span>${sel(i+1,H.map(h=>h[0]),"choose")}</div></div>`).join("")}</div>
+    <div class="sec"><h3>Questions 8–15</h3><p class="inst">Do the statements agree with the information in the passage? Choose TRUE, FALSE or NOT GIVEN.</p>
+     ${D.tfng.map((t,i)=>{const n=8+i;return `<div class="q" id="q${n}"><div><span class="n">${n}</span>${t.s}</div><div class="tf">${["TRUE","FALSE","NOT GIVEN"].map(o=>`<button data-q="${n}" data-o="${o}" class="${S.ans[n]===o?"sel":""}" aria-pressed="${S.ans[n]===o}">${o}</button>`).join("")}</div></div>`}).join("")}</div>
+    <div class="sec"><h3>Questions 16–21</h3><p class="inst">Complete the summary. Choose ONE word from the box for each gap. Six words are not used.</p>
+     <div class="box">${D.summary.box.slice().sort().map(w=>`<span>${w}</span>`).join("")}</div>
+     <div class="summary">${sum}</div></div>
+    <div class="submitbar"><span class="progress" id="prog"></span><span style="flex:1"></span>
+     <button class="btn" id="sub">Submit my exam</button></div>
+   </section></div>`;
+  const mark=()=>{for(let n=1;n<=TOTAL;n++){const q=$("#q"+n);if(q)q.classList.toggle("answered",!!S.ans[n])}$("#prog").textContent=`${answered()} of ${TOTAL} answered`};
+  $("#app").querySelectorAll("select").forEach(s=>s.onchange=()=>{S.ans[s.dataset.q]=s.value;save();mark()});
+  $("#app").querySelectorAll(".tf button").forEach(b=>b.onclick=()=>{
+    S.ans[b.dataset.q]=b.dataset.o;save();
+    b.parentNode.querySelectorAll("button").forEach(x=>{const on=x===b;x.classList.toggle("sel",on);x.setAttribute("aria-pressed",on)});mark()});
+  $("#sub").onclick=askSubmit;
+  mark();
+  clearInterval(tick);tick=setInterval(clock,500);clock();
+}
+function clock(){
+  const left=Math.max(0,S.endAt-Date.now()),m=Math.floor(left/60000),s=Math.floor(left/1000)%60;
+  const c=$("#clock");c.textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;c.classList.toggle("low",left<5*60000);
+  if(left<=0){clearInterval(tick);S.auto=true;submit()}
+}
+function askSubmit(){
+  const left=TOTAL-answered();
+  dialog(`<h3>Submit your exam?</h3><p>${left?`You have <b>${left} unanswered question${left>1?"s":""}</b>. `:"You have answered every question. "}After you submit, you cannot change your answers.</p>
+  <div class="row"><button class="btn ghost" id="no">Keep working</button><button class="btn" id="yes">Submit now</button></div>`);
+  $("#no").onclick=closeDialog;$("#yes").onclick=()=>{closeDialog();submit()};
+}
+function submit(){clearInterval(tick);S.stage="done";S.submittedAt=Date.now();save();done()}
+
+/* ---------- submitted, locked ---------- */
+function done(){
+  $("#clock").hidden=true;$("#who").textContent=`${S.name} · ${S.id}`;
+  $("#app").innerHTML=`<div class="screen"><div class="panel">
+   <h2>Your exam has been submitted</h2>
+   <p>${S.auto?"The time ran out, so your answers were submitted automatically. ":""}You answered <b>${answered()} of ${TOTAL}</b> questions.</p>
+   <p>Your results are locked. Ask your teacher to type the passcode.</p>
+   <label for="pc">Teacher passcode</label><input type="password" id="pc" autocomplete="off">
+   <div class="err" id="err"></div>
+   <div class="row"><button class="btn" id="un">Show my results</button></div>
+  </div></div><footer>Designed by: Nazila Motahari &nbsp;|&nbsp; Higher Colleges of Technology</footer>`;
+  const go=()=>{if(hash($("#pc").value)===PASS_HASH){S.unlocked=true;save();results()}else{$("#err").textContent="That passcode is not correct.";$("#pc").select()}};
+  $("#un").onclick=go;$("#pc").onkeydown=e=>{if(e.key==="Enter")go()};
+}
+
+/* ---------- results ---------- */
+const norm=s=>String(s||"").trim().toLowerCase();
+function grade(){
+  const rows=[];
+  PKEYS.forEach((p,i)=>rows.push({n:i+1,sec:"Headings",key:K.h[p],ans:S.ans[i+1],why:K.hw[p],ok:S.ans[i+1]===K.h[p]}));
+  D.tfng.forEach((t,i)=>rows.push({n:8+i,sec:"T/F/NG",key:K.t[i],ans:S.ans[8+i],why:K.tw[i].why,ok:S.ans[8+i]===K.t[i],ev:K.tw[i].ev,p:K.tw[i].p}));
+  K.s.forEach((a,i)=>rows.push({n:16+i,sec:"Summary",key:a[0],ans:S.ans[16+i],why:"",ok:a.map(norm).includes(norm(S.ans[16+i]))}));
+  return rows;
+}
+function results(){
+  const R=grade(),tot=R.filter(r=>r.ok).length,by=s=>R.filter(r=>r.sec===s&&r.ok).length,pass=tot>=17;
+  const when=new Date(S.submittedAt).toLocaleString();
+  $("#app").innerHTML=`<div class="screen" style="max-width:900px"><div class="panel">
+   <h2>Results: ${esc(S.name)}</h2><p class="inst">Student ID ${esc(S.id)} · submitted ${when}${S.auto?" (time ran out)":""}</p>
+   <p class="big">${tot} / ${TOTAL}</p>
+   <table class="br"><tr><td>Matching headings</td><td><b>${by("Headings")} / 7</b></td></tr><tr><td>True / False / Not Given</td><td><b>${by("T/F/NG")} / 8</b></td></tr><tr><td>Summary completion</td><td><b>${by("Summary")} / 6</b></td></tr></table>
+   <p>${pass?"Goal reached: 17 or more. Well done.":tot>=13?"Nearly there. Read the explanations below for every question you missed.":"Review the strategy slides, then read the explanations below for every question you missed."}</p>
+   ${pass?`<div class="cert"><div class="seal">${tot} / ${TOTAL}</div><h4>Certificate of Achievement</h4><div>This certifies that</div><div class="nm">${esc(S.name)}</div>
+    <div>passed the Vocab List 6 reading exam, <i>${D.title}</i>, with a score of <b>${tot} / ${TOTAL}</b>.</div>
+    <div style="margin-top:14px;font-family:var(--serif);font-style:italic">Designed by: Nazila Motahari · Higher Colleges of Technology</div></div>`:""}
+   <h3 style="font-family:var(--serif)">Every question</h3>
+   <table class="rev"><thead><tr><th>Q</th><th>Your answer</th><th>Correct answer</th><th>Why</th></tr></thead><tbody>
+   ${R.map(r=>`<tr><td><b>${r.n}</b></td><td class="${r.ok?"ok":"no"}">${esc(r.ans)||"—"} ${r.ok?"✓":"✗"}</td><td>${esc(r.key)}</td><td>${esc(r.why)}${r.ev?` <i>Evidence (${r.p}): “${esc(r.ev)}”</i>`:""}</td></tr>`).join("")}
+   </tbody></table>
+   <div class="row"><button class="btn" id="pr">Print / save as PDF</button><button class="btn ghost" id="dl">Download results (.json)</button><button class="btn ghost" id="rs">New student (teacher)</button></div>
+  </div></div>`;
+  $("#pr").onclick=()=>window.print();
+  $("#dl").onclick=()=>download({app:STORE,kind:"results",name:S.name,id:S.id,submittedAt:new Date(S.submittedAt).toISOString(),auto:S.auto,score:tot,headings:by("Headings"),tfng:by("T/F/NG"),summary:by("Summary"),answers:S.ans},`exam-results-${S.id}.json`);
+  $("#rs").onclick=()=>{
+    dialog(`<h3>Clear this exam for a new student?</h3><p>This removes ${esc(S.name)}'s answers from this device. Download the results first if you need them.</p>
+    <label for="pc2">Teacher passcode</label><input type="password" id="pc2"><div class="err" id="err2"></div>
+    <div class="row"><button class="btn ghost" id="c1">Cancel</button><button class="btn" id="c2">Clear and restart</button></div>`);
+    $("#c1").onclick=closeDialog;
+    $("#c2").onclick=()=>{if(hash($("#pc2").value)!==PASS_HASH){$("#err2").textContent="That passcode is not correct.";return}closeDialog();store.clear();S=fresh();start()};
+  };
+  if(pass&&!S.celebrated){S.celebrated=true;save();confetti()}
+}
+function download(obj,name){const b=new Blob([JSON.stringify(obj,null,1)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click()}
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const c=$("#cf"),x=c.getContext("2d");if(!x)return;c.width=innerWidth;c.height=innerHeight;const cols=["#5B3A29","#8EC5E8","#FFE58A","#FFFFFF"];
+  const P=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vy:2+Math.random()*3,vx:-1+Math.random()*2,r:Math.random()*6,vr:-.1+Math.random()*.2,c:cols[Math.floor(Math.random()*4)]}));
+  let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.strokeStyle="#3E2619";x.fillRect(-8,-4.5,16,9);x.strokeRect(-8,-4.5,16,9);x.restore()});if(++t<240)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})();
+}
+/* resume where the student left off (e.g. after an accidental refresh) */
+if(S.stage==="exam"){if(Date.now()>=S.endAt){S.auto=true;submit()}else exam()}
+else if(S.stage==="done"){S.unlocked?results():done()}
+else start();
+</script>
+</body>
+</html>
